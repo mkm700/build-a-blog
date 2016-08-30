@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Build A Blog | Detail Page{% endblock %}
+{% block heading %}Build A Blog{% endblock %}
+
+{% block content %}
+
+
+    <div class="blog-post">
+        <h2 class="post-title">{{post.title}}</h2>
+        <pre class="post-body">{{post.post}}</div>
+    </div>
+
+    <div class="error">{{error}}</div>
+
+
+{% endblock %}
