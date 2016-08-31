@@ -45,8 +45,7 @@
     }
 
     .blog-post + .blog-post {
-        margin-top: 40px;
-        padding-top: 40px;
+        margin-top: 30px;
         border-top: 1px dashed #FF6666;
     }
 
@@ -61,10 +60,15 @@
         font-family:Tahoma, sans-serif;
     }
 
+    .prevnext {
+        padding: 30px 0;
+    }
+
     </style>
 
     <body>
         <h1>{% block heading %}HEADING1{%endblock %}</h1>
+        <div class="nav"><a href="/blog">Home</a> | <a href="/blog/newpost">New Post</a></div>
         {% block content %}
         {% endblock %}
     </body>

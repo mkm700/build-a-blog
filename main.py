@@ -28,16 +28,45 @@ class Blog(db.Model):
     post = db.TextProperty(required = True)
     created = db.DateTimeProperty(auto_now_add=True)
 
+#query the database for posts using limit and offset, and return them
+def get_posts(limit, offset):
+    posts = db.GqlQuery("SELECT * FROM Blog "
+                        "ORDER BY created DESC "
+                        "LIMIT " + str(limit) +
+                        "OFFSET " + str(offset))
+    return posts
+
 #Displays a list of blog posts on the home page
 class MainHandler(webapp2.RequestHandler):
 
     def get(self):
-        posts = db.GqlQuery("SELECT * FROM Blog "
-                            "ORDER BY created DESC "
-                            "LIMIT 5")
+        #Set how many posts to display per page
+        limit = 5
 
+        #check to see if page number is present in url and set page number
+        if self.request.get("page"):
+            page = int(self.request.get("page"))
+        else:
+            page = 1
+
+        #calculate offset (which post to display first)
+        offset = ((limit * page) - limit)
+
+
+        #call the funstion to return the post data
+        posts = get_posts(limit, offset)
+
+        #determine the last page number based on total number of posts and limit
+        numposts = posts.count()
+        if numposts % limit == 0:
+            lastpage = numposts / limit
+        else:
+            lastpage = (numposts / limit) + 1
+
+
+        #render the page
         t = jinja_env.get_template("blog.html")
-        response = t.render(posts=posts)
+        response = t.render(posts=posts,page=page,lastpage=lastpage)
         self.response.write(response)
 
 
