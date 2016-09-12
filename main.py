@@ -36,8 +36,13 @@ def get_posts(limit, offset):
                         "OFFSET " + str(offset))
     return posts
 
+class Handler(webapp2.RequestHandler):
+    """ A base RequestHandler class for our app.
+        The other handlers inherit from this one.
+    """
+
 #Displays a list of blog posts on the home page
-class MainHandler(webapp2.RequestHandler):
+class MainHandler(Handler):
 
     def get(self):
         #Set how many posts to display per page
@@ -52,8 +57,7 @@ class MainHandler(webapp2.RequestHandler):
         #calculate offset (which post to display first)
         offset = ((limit * page) - limit)
 
-
-        #call the funstion to return the post data
+        #call the function to return the post data
         posts = get_posts(limit, offset)
 
         #determine the last page number based on total number of posts and limit
@@ -63,7 +67,6 @@ class MainHandler(webapp2.RequestHandler):
         else:
             lastpage = (numposts / limit) + 1
 
-
         #render the page
         t = jinja_env.get_template("blog.html")
         response = t.render(posts=posts,page=page,lastpage=lastpage)
@@ -71,7 +74,7 @@ class MainHandler(webapp2.RequestHandler):
 
 
 #Add a new Blog Post
-class NewPostHandler(webapp2.RequestHandler):
+class NewPostHandler(Handler):
     def get(self):
         t = jinja_env.get_template("newpost.html")
         response = t.render()
@@ -91,7 +94,8 @@ class NewPostHandler(webapp2.RequestHandler):
             response = t.render(title=title,post=post,error=error)
             self.response.write(response)
 
-class ViewPostHandler(webapp2.RequestHandler):
+#displays the blog detail page based on its unique id
+class ViewPostHandler(Handler):
     def get(self, id):
         id = int(id)
         post = Blog.get_by_id(id)
@@ -106,8 +110,7 @@ class ViewPostHandler(webapp2.RequestHandler):
             self.response.write(response)
 
 app = webapp2.WSGIApplication([
-#???How do I redirect the index page to /blog???
-#    ('/', MainHandler),
+    ('/', MainHandler),
     ('/blog', MainHandler),
     ('/blog/newpost', NewPostHandler),
     webapp2.Route('/blog/<id:\d+>', ViewPostHandler)

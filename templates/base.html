@@ -3,72 +3,75 @@
 <html>
     <head>
         <title>{% block title %}PAGE TITLE{%endblock %}</title>
+
+        <style>
+            body{
+                font-family:Tahoma, sans-serif;
+                width:800px;
+                margin: 10px auto;
+                padding:20px;
+            }
+
+            .error{
+                color: red;
+                padding-bottom:20px;
+            }
+
+            label{
+                display:block;
+                font-size:20px;
+                margin-bottom: 20px;
+            }
+
+            input[type=text] {
+                width:400px;
+                font-size:20px;
+                padding: 2px;
+            }
+
+            textarea {
+                width:400px;
+                height:200px;
+                font-size: 17px;
+            }
+
+            input[type=submit] {
+                font-size:24px;
+            }
+
+            hr {
+                margin:20px auto;
+            }
+
+            article {
+                clear: both;
+                margin: 10px 0;
+                border-top: 1px dashed #FF6666;
+            }
+
+            .post-title {
+                font-weight: bold;
+                font-size: 20px;
+            }
+
+            .post-body {
+                margin: 0;
+                font-size: 17px;
+                font-family:Tahoma, sans-serif;
+                line-height: 1.4em;
+                white-space: pre-wrap;
+            }
+
+            .prevnext {
+                padding: 30px 0;
+            }
+
+            </style>
     </head>
 
-    <style>
-    body{
-        font-family:Tahoma, sans-serif;
-        width:800px;
-        margin: 0 auto;
-        padding:10px 0 100px 0;
-    }
-
-    .error{
-        color: red;
-        padding-bottom:20px;
-    }
-
-    label{
-        display:block;
-        font-size:20px;
-        margin-bottom: 20px;
-    }
-
-    input[type=text] {
-        width:400px;
-        font-size:20px;
-        padding: 2px;
-    }
-
-    textarea {
-        width:400px;
-        height:200px;
-        font-size: 17px;
-    }
-
-    input[type=submit] {
-        font-size:24px;
-    }
-
-    hr {
-        margin:20px auto;
-    }
-
-    .blog-post + .blog-post {
-        margin-top: 30px;
-        border-top: 1px dashed #FF6666;
-    }
-
-    .post-title {
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .post-body {
-        margin: 0;
-        font-size: 17px;
-        font-family:Tahoma, sans-serif;
-    }
-
-    .prevnext {
-        padding: 30px 0;
-    }
-
-    </style>
-
     <body>
-        <h1>{% block heading %}HEADING1{%endblock %}</h1>
-        <div class="nav"><a href="/blog">Home</a> | <a href="/blog/newpost">New Post</a></div>
+        <header><h1>{% block heading %}HEADING1{%endblock %}</h1></header>
+        <nav><a href="/blog">Home</a> | <a href="/blog/newpost">New Post</a></nav>
         {% block content %}
         {% endblock %}
     </body>
